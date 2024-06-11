@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Eyes</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: white;
+        }
+
+        .eye {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 2px solid #000;
+            position: relative;
+            margin: 20px;
+        }
+
+        .pupil {
+            width: 50px;
+            height: 50px;
+            background-color: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 25px;
+            left: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="eye">
+        <div class="pupil"></div>
+    </div>
+    <div class="eye">
+        <div class="pupil"></div>
+    </div>
+    <script>
+        document.addEventListener('mousemove', function(event) {
+            const eyes = document.querySelectorAll('.eye');
+            eyes.forEach(eye => {
+                let pupil = eye.querySelector('.pupil'); // Correctly select the pupil within the eye
+                let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
+                let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
+                let radian = Math.atan2(event.pageY - y, event.pageX - x); // Adjust the order of arguments
+                let rotation = radian * (180 / Math.PI); // Convert radian to degrees
+                pupil.style.transform = `rotate(${rotation}deg) translateX(25px)`; // Apply transform to the pupil
+            });
+        });
+    </script>
+</body>
+</html>
